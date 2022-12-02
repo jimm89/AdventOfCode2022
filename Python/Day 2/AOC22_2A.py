@@ -10,12 +10,8 @@ cols = [['A', 'B', 'C'], ['X', 'Y', 'Z']]
 score = 0
 
 for a, x in inp:
-    score += cols[1].index(x) + 1
     i0, i1 = cols[0].index(a), cols[1].index(x)
-    if i0 == i1:
-        score += 3
-        continue
-    if i0 + 1 == i1 or i0 - 2 == i1:
-        score += 6
+    score += i1 + 1
+    score += ((i1 - i0 + 1) % 3) * 3
 
 print(score)
