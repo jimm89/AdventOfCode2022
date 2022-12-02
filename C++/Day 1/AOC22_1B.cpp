@@ -19,6 +19,6 @@ int main() {
 	}
 	sums.push_back(curr);
 	sort(sums.rbegin(), sums.rend());
-	cout << sums[0] << endl;
+	cout << sums[0] + sums[1] + sums[2] << endl;
     return 0;
 }
