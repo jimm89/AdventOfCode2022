@@ -12,6 +12,7 @@ score = 0
 for a, x in inp:
     i0, i1 = cols[0].index(a), cols[1].index(x)
     score += i1 + 1
-    score += ((i1 - i0 + 1) % 3) * 3
+    diff = i1 - i0
+    score += ((diff + 1) % 3) * 3
 
 print(score)
