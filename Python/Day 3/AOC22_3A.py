@@ -3,16 +3,18 @@ from collections import defaultdict as dd
 read = sys.stdin.read
 f = open("AOC22_3A_in.txt")
 
-inp = [z.split() for z in f.read().split('\n')]
+inp = f.read().split('\n')
 
-cols = [['A', 'B', 'C'], ['X', 'Y', 'Z']]
+ans = 0
 
-score = 0
+for x in inp:
+    n = len(x)
+    a, b = x[:n//2], x[n//2:]
+    for i in range(26):
+        c1, c2 = chr(ord('a') + i), chr(ord('A') + i)
+        if c1 in a and c1 in b:
+            ans += i + 1
+        if c2 in a and c2 in b:
+            ans += i + 27
 
-for a, x in inp:
-    i0, i1 = cols[0].index(a), cols[1].index(x)
-    score += i1 * 3
-    i2 = (i0 - 1 + i1) % 3
-    score += i2 + 1
-
-print(score)
+print(ans)
