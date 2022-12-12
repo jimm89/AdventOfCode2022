@@ -33,13 +33,15 @@ for i in range(n):
 big = 100000
 dist = [[big for j in range(m)] for i in range(n)]
 
+# multi-source BFS using deque
+
 q = dq([])
 
 for i in range(n):
     for j in range(m):
         if grid[i][j] == 0:
             dist[i][j] = 0
-            q.append((0, [i, j]))
+            q.append((0, [i, j])) # add all start points to the BFS queue with distance zero
             
 
 while q:
