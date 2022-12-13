@@ -1,4 +1,5 @@
 import sys, copy, re
+from functools import cmp_to_key
 from collections import defaultdict as dd
 read = sys.stdin.read
 f = open("AOC22_13A_in.txt")
@@ -61,9 +62,20 @@ def cmp(a, b):
     return cmp(a, '[' + b + ']')
     
 
-for i, p in enumerate(inp, start = 1):
-    a, b = p
-    if cmp(a, b) >= 0:
-        ans += i
+ans = []
+for a, b in inp:
+    ans.append(a)
+    ans.append(b)
 
-print(ans)
+p1 = '[[2]]'
+p2 = '[[6]]'
+
+ans.append(p1)
+ans.append(p2)
+
+ans.sort(key = cmp_to_key(cmp), reverse = True)
+
+i1 = ans.index(p1) + 1
+i2 = ans.index(p2) + 1
+
+print(i1 * i2)
