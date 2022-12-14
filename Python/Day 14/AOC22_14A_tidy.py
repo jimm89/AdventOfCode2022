@@ -9,7 +9,7 @@ for i in range(len(inp)):
     for j in range(len(inp[i])):
         inp[i][j] = list(map(int, inp[i][j].split(',')))
 
-# calculate min and 
+# calculate the lowest cave
 def limit():
     max_ = 0
     for a in inp:
