@@ -52,7 +52,6 @@ def valid(pt):
     return 1
 
 for i in range(len(s)):
-    print(i)
     sx, sy = s[i]
     bx, by = b[i]
     
