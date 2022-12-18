@@ -5,37 +5,12 @@ f = open("AOC22_18A_in.txt")
 
 inp = [list(map(int,x.split(','))) for x in f.read().split('\n')]
 
-x, y, z = dd(set), dd(set), dd(set)
 pts = set()
 
 for a, b, c in inp:
-    x[a].add((b,c))
-    y[b].add((a,c))
-    z[c].add((a,b))
     pts.add((a, b, c))
 
-
-n = len(inp)
-
 G = dd(list)
-
-m = 0
-
-for a in x:
-    for b, c in x[a]:
-        if a + 1 in x and (b, c) in x[a + 1]:
-            m += 2
-
-for b in y:
-    for a, c in y[b]:
-        if b + 1 in y and (a, c) in y[b + 1]:
-            m += 2
-
-for c in z:
-    for a, b in z[c]:
-        if c + 1 in z and (a, b) in z[c + 1]:
-            m += 2
-
 
 ops = [(-1, 0, 0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, -1), (0, 0, 1)]
 
@@ -43,34 +18,38 @@ ops = [(-1, 0, 0), (1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, -1), (0, 0, 1)]
     consider the inside of each cube a node, and also the face of each cube a node
     there is an edge between the inside and the face unless there's a cube there
 """
+mn = 0
+mx = 19
 
-for i in range(20):
-    for j in range(20):
-        for k in range(20):
+for i in range(mn, mx + 1):
+    for j in range(mn, mx + 1):
+        for k in range(mn, mx + 1):
             if (i, j, k) in pts:
                 continue
             for a, b, c in ops:
                 G[(i, j, k, 0, 0, 0)].append((i, j, k, a, b, c))
                 G[(i, j, k, a, b, c)].append((i, j, k, 0, 0, 0))
 
-for i in range(-1, 21):
-    for j in range(-1, 21):
-        for k in range(-1, 21):
+# must also have an edge from one side of the face to the other
+for i in range(mn, mx + 1):
+    for j in range(mn, mx + 1):
+        for k in range(mn, mx + 1):
             for a, b, c in ops:
                 G[(i, j, k, a, b, c)].append((i + a, j + b, k + c, -a, -b, -c))
             
 
-source = (-10, -10, -10, -10, -10, -10)
+source = (-1, ) # different length guarantees uniqueness
 
-for i in range(20):
-    for j in range(20):
-        for a, b, c in ops:
-            G[source].append((i, j, 19, 0, 0, 1))
-            G[source].append((i, j, 0, 0, 0, -1))
-            G[source].append((i, 19, j, 0, 1,0))
-            G[source].append((i, 0, j, 0, -1,0))
-            G[source].append((19, i, j, 1, 0,0))
-            G[source].append((0, i, j, -1, 0,0))
+# an external 'source' node flows to the outer most faces only
+for i in range(mn, mx + 1):
+    for j in range(mn, mx + 1):
+        for q in ops:
+            sm = sum(q)
+            idx = q.index(sm)
+            rotate = (idx + 1) % 3
+            pt = [i, j, mx if sm > 0 else mn]
+            pt = tuple(pt[-rotate : ] + pt[ : -rotate])
+            G[source].append(pt + q)
 
 # bfs from source
 vis = set()
@@ -86,6 +65,7 @@ while q:
 
 ans = 0
 
+# count the number of faces of cubes in the set which can be reached from the source, i.e. are in vis
 for i, j, k in pts:
     for a, b, c in ops:
         if (i, j, k, a, b, c) in vis:
