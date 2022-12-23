@@ -36,16 +36,11 @@ for _ in range(10):
                 continue
             for k in range(4):
                 p = (d + k) % 4
-                if p < 2: # try horizontally adjacent
-                    if not any([inp[i + D[p][0]][j + D[p][1] + dj] == '#' for dj in range(-1, 2)]):
-                        move[(i, j)] = (i + D[p][0], j + D[p][1])
-                        cnt[(i + D[p][0], j + D[p][1])] += 1
-                        break
-                else:
-                    if not any([inp[i + D[p][0] + di][j + D[p][1]] == '#' for di in range(-1, 2)]):
-                        move[(i, j)] = (i + D[p][0], j + D[p][1])
-                        cnt[(i + D[p][0], j + D[p][1])] += 1
-                        break
+                ds = [[x * (abs(D[p][0]) ^ 1), x * (abs(D[p][1]) ^ 1)] for x in range(-1, 2)]
+                if not any([inp[i + D[p][0] + di][j + D[p][1] + dj] == '#' for di, dj in ds]):
+                    move[(i, j)] = (i + D[p][0], j + D[p][1])
+                    cnt[(i + D[p][0], j + D[p][1])] += 1
+                    break
                 
     d = (d + 1) % 4
     for elf, mv in move.items():
