@@ -65,7 +65,6 @@ def get_(start_t, start):
 
     while q:
         d, t, x, y = h.heappop(q)
-        #print(d, t, x, y, LCM, n, m)
         if dp[t][x][y] != d:
             continue
         for k in range(5):
