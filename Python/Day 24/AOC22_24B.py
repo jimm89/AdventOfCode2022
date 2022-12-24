@@ -82,8 +82,11 @@ def get_(start_t, start):
     
     return ret
 
-ans = get_(0, True)
-ans2 = get_(ans, False)
-ans3 = get_(ans2, True)
+ans = 0
+flag = False
+for _ in range(3):
+    ans = get_(0, False ^ 1)
+    ans2 = get_(ans, False)
+    ans3 = get_(ans2, True)
 
 print(ans3)
