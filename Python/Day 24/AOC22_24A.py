@@ -37,7 +37,7 @@ for i in range(n):
 """
     shortest path from source to sink at time 0
     repeats itself every 300 moves
-    dp[x][y][z] = shortest time if I'm currently at pos x, y and the time mod T is z
+    dp[t][x][y] = shortest time if I'm currently at pos x, y and the time mod LCM is t
 """
             
 
@@ -49,13 +49,10 @@ q = [(0, 0, 0, source)]
 
 for t in range(LCM - 1):
     for x, y, z in b[t]:
-        new_x = (x + dx[z]) % (n - 2)
-        new_y = (y + dy[z]) % (m - 2)
-        if new_x == 0:
-            new_x = n - 2
-        if new_y == 0:
-            new_y = m - 2
+        new_x = (x - 1 + dx[z]) % (n - 2) + 1
+        new_y = (y - 1 + dy[z]) % (m - 2) + 1
         b[t + 1].add((new_x, new_y, z))
+
 
 while q:
     d, t, x, y = h.heappop(q)
