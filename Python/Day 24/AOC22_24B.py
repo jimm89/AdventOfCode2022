@@ -86,5 +86,4 @@ ans = get_(0, True)
 ans2 = get_(ans, False)
 ans3 = get_(ans + ans2, True)
 
-print(ans, ans2, ans3)
 print(ans + ans2 + ans3)
