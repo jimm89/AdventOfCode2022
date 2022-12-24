@@ -34,15 +34,15 @@ for i in range(n):
         if a[i][j] != '#':
             a[i][j] = '.'
 
-    for t in range(LCM - 1):
-        for x, y, z in b[t]:
-            new_x = (x + dx[z]) % (n - 2)
-            new_y = (y + dy[z]) % (m - 2)
-            if new_x == 0:
-                new_x = n - 2
-            if new_y == 0:
-                new_y = m - 2
-            b[t + 1].add((new_x, new_y, z))
+for t in range(LCM - 1):
+    for x, y, z in b[t]:
+        new_x = (x + dx[z]) % (n - 2)
+        new_y = (y + dy[z]) % (m - 2)
+        if new_x == 0:
+            new_x = n - 2
+        if new_y == 0:
+            new_y = m - 2
+        b[t + 1].add((new_x, new_y, z))
 
 """
     shortest path from source to sink at time 0
@@ -58,9 +58,9 @@ def get_(start_t, start):
     if not start:
         source, sink = sink, source
 
-    dp[start_t % LCM][source[0]][source[1]] = 0
+    dp[start_t % LCM][source[0]][source[1]] = start_t
 
-    q = [(0, start_t % LCM, source[0], source[1])]
+    q = [(start_t, start_t % LCM, source[0], source[1])]
 
 
     while q:
@@ -84,6 +84,6 @@ def get_(start_t, start):
 
 ans = get_(0, True)
 ans2 = get_(ans, False)
-ans3 = get_(ans + ans2, True)
+ans3 = get_(ans2, True)
 
-print(ans + ans2 + ans3)
+print(ans3)
