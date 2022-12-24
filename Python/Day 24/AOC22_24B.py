@@ -85,8 +85,7 @@ def get_(start_t, start):
 ans = 0
 flag = False
 for _ in range(3):
-    ans = get_(0, False ^ 1)
-    ans2 = get_(ans, False)
-    ans3 = get_(ans2, True)
+    flag ^= True
+    ans = get_(ans, flag)
 
-print(ans3)
+print(ans)
